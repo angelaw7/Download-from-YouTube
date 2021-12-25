@@ -4,6 +4,17 @@ import os
 SAVE_PATH = os.environ.get("SAVE_PATH")
 
 
+def clean_title(title):
+    clean = ""
+    remove_list = ["/", "\\", "|", ":", "*", "\"", "<", ">"]
+
+    for letter in title:
+        if letter not in remove_list:
+            clean += letter
+
+    return clean
+
+
 def download_video(link):
     try:
         yt = YouTube(link)
@@ -21,6 +32,8 @@ def download_video(link):
     except:
         print("Download error")
 
+    return clean_title(filtered_yt.title)
+
 
 def download_playlist(link):
     playlist = Playlist(link)
@@ -30,10 +43,6 @@ def download_playlist(link):
 
     for video in playlist.videos:
         video.streams.first().download(SAVE_PATH)
-
-
-def testing(a):
-    print("yay " + a)
 
 
 if __name__ == '__main__':

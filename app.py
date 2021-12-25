@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_file
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField
 from flask import render_template, request, flash, redirect, url_for
@@ -21,6 +21,7 @@ class YtForm(FlaskForm):
 def main():
     form = YtForm()
     if form.validate_on_submit():
-        download_video(form.link.data)
-        return form.link.data
+        recent_vid = download_video(form.link.data) + ".mp4"
+        return send_file("./downloads/" + recent_vid, as_attachment=True)
+        # return form.link.data
     return render_template('index.html', form=form)
