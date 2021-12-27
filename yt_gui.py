@@ -31,19 +31,19 @@ def download_video_button():
         print("failed")
         error_type = res
         error_text = Label(root, text="Error: " + error_type)
-        error_text.grid(row=6)
+        error_text.grid(row=6, column=0, columnspan=4)
     else:
         print(res)
         video_title = res
-        success_text = Label(root, text="Successfully downloaded " + video_title + "!")
-        success_text.grid(row=6)
+        success_text = Label(root, text="Successfully downloaded " + video_title + "!", wraplength=500)
+        success_text.grid(row=6, column=0, columnspan=4)
 
 
-title = Label(root, text="YouTube Download", width=40, height=10)
-title.grid(row=0)
+title = Label(root, text="YouTube Download", width=40, height=4, font=("Arial", 16))
+title.grid(row=0, column=0, columnspan=4)
 
-e = Entry(root, width=35, borderwidth=1)
-e.grid(row=4, column=0, columnspan=3, padx=20, pady=10)
+e = Entry(root, width=60, borderwidth=1)
+e.grid(row=4, column=0, columnspan=3, padx=20, pady=4)
 download_button = Button(root, text="Download", padx=20, pady=10, bg="#ADD8E6", command=download_video_button)
 
 download_button.grid(row=4, column=3)
