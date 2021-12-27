@@ -1,7 +1,9 @@
 from pytube import YouTube, Playlist
 import os
+from dotenv import load_dotenv
 
-SAVE_PATH = os.environ.get("SAVE_PATH")
+load_dotenv()
+SAVE_PATH = os.getenv("SAVE_PATH")
 
 
 def clean_title(title):
@@ -24,7 +26,7 @@ def download_video(link):
     try:
         filtered_yt = yt.streams.filter(file_extension="mp4").first()
     except:
-        print("Error")
+        print("Filter error")
 
     try:
         filtered_yt.download(SAVE_PATH)
@@ -46,5 +48,7 @@ def download_playlist(link):
 
 
 if __name__ == '__main__':
-    link = input("Link: ")
-    download_playlist(link)
+    print(SAVE_PATH)
+
+    # link = input("Link: ")
+    # download_playlist(link)
