@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-SAVE_PATH = os.getenv("SAVE_PATH")
+save_path = os.getenv("SAVE_PATH")
 
 
 def clean_title(title):
@@ -17,6 +17,16 @@ def clean_title(title):
     return clean
 
 
+def get_path():
+    return save_path
+
+
+def change_path(path):
+    global save_path
+    save_path = path
+    print(save_path)
+
+
 def download_video(link):
     try:
         yt = YouTube(link)
@@ -25,7 +35,7 @@ def download_video(link):
         return "Invalid link"
 
     try:
-        filtered_yt.download(SAVE_PATH)
+        filtered_yt.download(save_path)
         print("Success!")
     except:
         return "Download error"
@@ -40,11 +50,11 @@ def download_playlist(link):
         print(video)
 
     for video in playlist.videos:
-        video.streams.first().download(SAVE_PATH)
+        video.streams.first().download(save_path)
 
 
 if __name__ == '__main__':
-    print(SAVE_PATH)
+    print(save_path)
 
     # link = input("Link: ")
     # download_playlist(link)
