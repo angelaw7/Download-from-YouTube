@@ -20,19 +20,15 @@ def clean_title(title):
 def download_video(link):
     try:
         yt = YouTube(link)
-    except:
-        print("Connection error")
-
-    try:
         filtered_yt = yt.streams.filter(file_extension="mp4").first()
     except:
-        print("Filter error")
+        return "Invalid link"
 
     try:
         filtered_yt.download(SAVE_PATH)
         print("Success!")
     except:
-        print("Download error")
+        return "Download error"
 
     return clean_title(filtered_yt.title)
 
