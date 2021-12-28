@@ -12,8 +12,10 @@ root.directory = get_path()
 
 def change_save_path():
     root.directory = filedialog.askdirectory()
-    download_location.config(text=root.directory)
-    change_path(root.directory)
+    if root.directory != "":
+        print("not none")
+        download_location.config(text=root.directory)
+        change_path(root.directory)
 
 
 def reset_messages():
