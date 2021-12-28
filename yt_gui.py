@@ -14,7 +14,7 @@ def change_save_path():
     root.directory = filedialog.askdirectory()
     if root.directory != "":
         print("not none")
-        download_location.config(text=root.directory)
+        download_location.config(text="Save directory: \"" + root.directory + "\"")
         change_path(root.directory)
 
 
@@ -43,25 +43,32 @@ def download_video_button():
         success_text.config(text="Successfully downloaded " + video_title + "!", wraplength=500)
 
 
+# Title
 title = Label(root, text="YouTube Download", width=40, height=4, font=("Arial", 16))
 title.grid(row=0, column=0, columnspan=4)
 
-download_location = Label(root, text=root.directory)
+# Save directory
+download_location = Label(root, text="Save directory: \"" + root.directory + "\"")
 download_location.grid(row=3, column=0, columnspan=3)
 
+# Change directly button
 change_path_button = Button(root, text="Change directory", padx=20, pady=10, bg="#A9A9A9", command=change_save_path)
 change_path_button.grid(row=3, column=3)
 
+# Input field
 input_field = Entry(root, width=60, borderwidth=1)
 input_field.grid(row=4, column=0, columnspan=3, padx=20, pady=4)
 
+# Download button
 download_button = Button(root, text="Download", padx=20, pady=10, bg="#ADD8E6", command=download_video_button)
 download_button.grid(row=4, column=3)
 
+# Text while/after downloading
 is_downloading_text = Label(root, text="Downloading...", width=20, height=10)
 success_text = Label(root, text="")
 success_text.grid(row=6, column=0, columnspan=4)
 error_text = Label(root, text="")
 error_text.grid(row=6, column=0, columnspan=4)
 
+# Main
 root.mainloop()
