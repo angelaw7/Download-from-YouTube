@@ -30,9 +30,15 @@ def download_video_button():
     input_field.delete(0, END)
     is_downloading_text.grid(row=6)
     if select_video_playlist.get() == "video":
-        res = download_video(current)
+        if select_mp3_mp4 == "mp3":
+            res = download_video(current, "mp3")
+        else:
+            res = download_video(current, "mp4")
     else:
-        res = download_playlist(current)
+        if select_mp3_mp4 == "mp3":
+            res = download_playlist(current, "mp3")
+        else:
+            res = download_playlist(current, "mp4")
     is_downloading_text.config(text="")
 
     if res == "Invalid link" or res == "Download error":

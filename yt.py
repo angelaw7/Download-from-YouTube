@@ -27,23 +27,32 @@ def change_path(path):
     print(save_path)
 
 
-def download_video(link):
+def download_video(link, mp):
     try:
         yt = YouTube(link)
-        filtered_yt = yt.streams.filter(file_extension="mp4").first()
+        if mp == "mp4":
+            filtered_yt = yt.streams.filter(file_extension="mp4").first()
+        else:
+            filtered_yt = yt.streams.filter(only_audio=True).first()
     except:
         return "Invalid link"
 
+    video_title = clean_title(filtered_yt.title)
+
     try:
-        filtered_yt.download(save_path)
+        output = filtered_yt.download(save_path)
+        if mp == "mp3":
+            base, ext = os.path.splitext(output)
+            os.rename(output, base + ".mp3")
+
         print("Success!")
     except:
         return "Download error"
 
-    return clean_title(filtered_yt.title)
+    return video_title
 
 
-def download_playlist(link):
+def download_playlist(link, mp):
     video_list = []
 
     try:
@@ -63,8 +72,14 @@ def download_playlist(link):
             video_list.append(video)
         print(video_list)
 
-        for video in playlist.videos:
-            video.streams.first().download(new_directory)
+        if mp == "mp4":
+            for video in playlist.videos:
+                video.streams.filter(file_extension="mp4").first().download(new_directory)
+        else:
+            for video in playlist.videos:
+                output = video.streams.first().download(new_directory)
+                base, ext = os.path.splitext(output)
+                os.rename(output, base + ".mp3")
     except:
         return "Download error"
 
@@ -75,4 +90,4 @@ if __name__ == '__main__':
     print(save_path)
 
     link = input("Link: ")
-    download_playlist(link)
+    download_playlist(link, "mp3")
