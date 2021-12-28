@@ -44,8 +44,22 @@ def download_video_button():
 
 
 # Title
-title = Label(root, text="YouTube Download", width=40, height=4, font=("Arial", 16))
+title = Label(root, text="Download from YouTube", width=40, height=4, font=("Arial", 16))
 title.grid(row=0, column=0, columnspan=4)
+
+# Radio buttons to select video/playlist
+select_video_playlist = StringVar(root, "video")
+video_option = Radiobutton(root, text="Single video", variable=select_video_playlist, value="video")
+video_option.grid(row=1, column=1)
+playlist_option = Radiobutton(root, text="Playlist", variable=select_video_playlist, value="playlist")
+playlist_option.grid(row=2, column=1)
+
+# Radio buttons to select mp3/mp4
+select_mp3_mp4 = StringVar(root, "mp4")
+mp3_option = Radiobutton(root, text="mp3 (audio)", variable=select_mp3_mp4, value="mp3")
+mp3_option.grid(row=1, column=2)
+mp4_option = Radiobutton(root, text="mp4 (video)", variable=select_mp3_mp4, value="mp4")
+mp4_option.grid(row=2, column=2)
 
 # Save directory
 download_location = Label(root, text="Save directory: \"" + root.directory + "\"")
