@@ -44,17 +44,35 @@ def download_video(link):
 
 
 def download_playlist(link):
-    playlist = Playlist(link)
+    video_list = []
 
-    for video in playlist.video_urls:
-        print(video)
+    try:
+        playlist = Playlist(link)
+    except:
+        return "Invalid link"
 
-    for video in playlist.videos:
-        video.streams.first().download(save_path)
+    playlist_title = clean_title(playlist.title)
+    new_directory = save_path + "/" + playlist_title
+    try:
+        os.mkdir(new_directory)
+    except FileExistsError:
+        return "Directory exists"
+
+    try:
+        for video in playlist.video_urls:
+            video_list.append(video)
+        print(video_list)
+
+        for video in playlist.videos:
+            video.streams.first().download(new_directory)
+    except:
+        return "Download error"
+
+    return playlist_title
 
 
 if __name__ == '__main__':
     print(save_path)
 
-    # link = input("Link: ")
-    # download_playlist(link)
+    link = input("Link: ")
+    download_playlist(link)

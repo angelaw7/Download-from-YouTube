@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 
-from yt import download_video, change_path, get_path
+from yt import download_video, download_playlist, change_path, get_path
 
 root = Tk()
 root.title("YouTube to mp4")
@@ -29,18 +29,22 @@ def download_video_button():
     current = input_field.get()
     input_field.delete(0, END)
     is_downloading_text.grid(row=6)
-    res = download_video(current)
-    is_downloading_text.grid_remove()
+    if select_video_playlist.get() == "video":
+        res = download_video(current)
+    else:
+        res = download_playlist(current)
+    is_downloading_text.config(text="")
 
     if res == "Invalid link" or res == "Download error":
         print("failed")
         error_type = res
         error_text.config(text="Error: " + error_type)
-
+    elif res == "Directory exists":
+        error_text.config(text="Error: Directory with the playlist name already exists -- "
+                               "Playlist might be downloaded already\nIf not, please rename that directory")
     else:
         print(res)
-        video_title = res
-        success_text.config(text="Successfully downloaded " + video_title + "!", wraplength=500)
+        success_text.config(text="Successfully downloaded " + res + "!", wraplength=500)
 
 
 # Title
