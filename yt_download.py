@@ -1,11 +1,10 @@
 from tkinter import *
 from tkinter import filedialog
 
-from yt import download_video, download_playlist, change_path, get_path
+from app import download_video, download_playlist, change_path, get_path
 
 root = Tk()
-root.title("YouTube to mp4")
-# root.iconbitmap("")
+root.title("Download from YouTube")
 root.geometry("600x400")
 root.directory = get_path()
 
@@ -13,7 +12,6 @@ root.directory = get_path()
 def change_save_path():
     root.directory = filedialog.askdirectory()
     if root.directory != "":
-        print("not none")
         download_location.config(text="Save directory: \"" + root.directory + "\"")
         change_path(root.directory)
 
@@ -60,9 +58,9 @@ title.grid(row=0, column=0, columnspan=4)
 # Radio buttons to select video/playlist
 select_video_playlist = StringVar(root, "video")
 video_option = Radiobutton(root, text="Single video", variable=select_video_playlist, value="video")
-video_option.grid(row=1, column=1)
+video_option.grid(sticky="W", row=1, column=1)
 playlist_option = Radiobutton(root, text="Playlist", variable=select_video_playlist, value="playlist")
-playlist_option.grid(row=2, column=1)
+playlist_option.grid(sticky="W", row=2, column=1)
 
 # Radio buttons to select mp3/mp4
 select_mp3_mp4 = StringVar(root, "mp4")
